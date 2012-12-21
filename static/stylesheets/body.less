@@ -1,0 +1,37 @@
+body {
+  font-family: @fontFamily;
+  font-weight: @fontWeight;
+  line-height: @lineHeight;
+
+  background-color: @dBlue;
+  background: url('/static/images/wallpaper.jpg') no-repeat top left;
+  color: @white;
+}
+
+h1,h2 {
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
+  color: @white;
+
+  &:hover {
+    text-decoration: none;
+    color: @white;
+  }
+}
+
+span.column {
+  display: inline-block;
+  vertical-align: top;
+  padding: 1em;
+}
+
+span.fixed-width-small {
+  width: 500px;
+}
+
+span.fixed-position {
+  position: fixed;
+}

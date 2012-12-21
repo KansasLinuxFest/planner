@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Planner</title>
+
+    <!-- Reset styles -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}/stylesheets/normalize.css">
+
+    <!-- Include less files -->
+    <link rel="stylesheet/less" href="{{ STATIC_URL }}/stylesheets/application.less">
+    <script src="{{ STATIC_URL }}/javascripts/vendor/less.js"></script>
+
+    <!-- Include WebFonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic,400italic' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <span class="column fixed-width-small">
+      <h1>Today</h1>
+      <div id="tasks-container">
+      </div>
+    </span>
+    <span class="column fixed-position">
+      <h1 class="day">{{ today.day }}</h1>
+      <h2 class="date">{{ today.full }}</h2>
+      {% csrf_token %}
+    </span>
+  </body>
+</html>

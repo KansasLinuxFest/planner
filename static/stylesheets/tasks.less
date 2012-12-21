@@ -1,0 +1,69 @@
+.boxSizingBorder{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+div.task-tile {
+  display: block;
+  width: 100%;
+  margin: 1em 0 0 1em;
+
+  background-color: @mdBlue;
+
+  &:hover {
+    background-color: @vdBlue;
+  }
+
+  ul {
+    .boxSizingBorder;
+    display: inline-block;
+    margin: 0.5em auto;
+    width: 94%;
+    min-height: 4em;
+
+    li {
+      list-style-type: circle;
+    }
+  }
+
+  span.task-actions {
+    vertical-align: top;
+    display: inline-block;
+    margin: 0;
+    width: 6%;
+
+    a.task-action-btn {
+      display: block;
+      height: 35px;
+      text-align: right;
+      opacity: 0.4;
+      background-color: rgba(255, 255, 255, 0.15);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+div.task-editor {
+  textarea {
+    .boxSizingBorder;
+    display: block;
+    height: 5em;
+    width: 100%;
+
+    border-radius: 0;
+    border: 1px solid @vdBlue;
+
+    background-color: transparent;
+    color: @white;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
