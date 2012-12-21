@@ -90,7 +90,7 @@ MEDIA_ROOT = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ROOT_DIR + "static"
+STATIC_ROOT = "/tmp/static"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
