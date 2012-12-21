@@ -1,0 +1,12 @@
+# Virtualenv stuff
+bin/
+include/
+lib/
+local/
+
+# Django ignores 
+*.pyc
+planserver/localsettings.py
+
+# Collected static files
+planserver/static/
