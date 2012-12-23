@@ -5,7 +5,7 @@
     "fields": {
       "date": "2012-12-23",
       "done": false,
-      "task": "- 1 do this, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
+      "task": " - 1 do this, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
     }
   },
   {
@@ -14,7 +14,7 @@
     "fields": {
       "date": "2012-12-23",
       "done": false,
-      "task": "- 2 do this in the morning, do that,\n - also, do this, do that\n - don't forget this, don't forget that, *definitely do this*"
+      "task": " - 2 do this in the morning, do that,\n - also, do this, do that\n - don't forget this, don't forget that, *definitely do this*"
     }
   },
   {
@@ -23,7 +23,7 @@
     "fields": {
       "date": "2012-12-23",
       "done": false,
-      "task": "- 3 do this tomorrow, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
+      "task": " - 3 do this tomorrow, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
     }
   },
   {
@@ -32,7 +32,7 @@
     "fields": {
       "date": "2012-12-23",
       "done": false,
-      "task": "- 4 do this, do that,\n - also, in the evening, do this, do that\n - don't forget this, don't forget that"
+      "task": " - 4 do this, do that,\n - also, in the evening, do this, do that\n - don't forget this, don't forget that"
     }
   }
 ]
