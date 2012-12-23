@@ -10,13 +10,29 @@
     <link rel="stylesheet/less" href="{{ STATIC_URL }}/stylesheets/application.less">
     <script src="{{ STATIC_URL }}/javascripts/vendor/less.js"></script>
 
+    <!-- Include knockout -->
+    <script src="{{ STATIC_URL }}/javascripts/vendor/require.js" data-main="{{ STATIC_URL }}/javascripts/application.js"></script>
+
     <!-- Include WebFonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,300,300italic,400italic' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <span class="column fixed-width-small">
       <h1>Today</h1>
-      <div id="tasks-container">
+      <div id="tasks-container" data-bind="foreach: tasks">
+        <!-- Define a plain non-editable view -->
+        <div class="task-tile" data-bind="ifnot: is_being_edited, attr: { id: 'data-' + id()}">
+          <div class="task-html" data-bind="html: html(), click: edit">
+          </div><span class="task-actions">
+            <a title="Done!" class="task-action-btn" href="#" data-bind="click: $root.done"><i class="icon icon-ok"></i></a>
+            <a title="Defer for tomorrow" class="task-action-btn" href="#" data-bind="click: $root.defer"><i class="icon icon-share-alt"/></i></a>
+          </span>
+        </div>
+
+        <!-- Define an editable view -->
+        <div class="task-tile task-editor" data-bind="if: is_being_edited, attr: { id: 'data-' + id()}">
+            <textarea data-bind="hasfocus: is_being_edited, html: markdown()"></textarea>
+        </div>
       </div>
     </span>
     <span class="column fixed-position">
@@ -24,5 +40,39 @@
       <h2 class="date">{{ today.full }}</h2>
       {% csrf_token %}
     </span>
+
+    <!-- Initialization: this script is formed via the django-template engine
+    and contains the initial data to use to populate the first tasks -->
+    <script language="javascript">
+      requirejs.config({
+        paths: {
+          knockout: "/static/javascripts/vendor/knockout"
+        }
+      });
+
+      function init(ko, app, vm) {
+        var tasks_from_template = [
+          {% for task in tasks_for_today %}
+            {
+              'id'       : {{ task.pk }},
+              'markdown' : "{{ task.task|safe|escapejs }}",
+              'html'     : "{{ task.to_ul|safe|escapejs }}"
+            },
+          {% endfor %}
+        ];
+
+        for (var i=0, tmp_task; i<tasks_from_template.length; i++) {
+          tmp_task = tasks_from_template[i]; 
+
+          app.task_list.tasks.push(new vm.Task(tmp_task.id,
+                                        tmp_task.markdown,
+                                        tmp_task.html));
+        }
+
+        ko.applyBindings(app.task_list);
+      };
+
+      requirejs(['knockout', 'application', 'viewmodels'], init);
+    </script>
   </body>
 </html>

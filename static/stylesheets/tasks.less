@@ -16,12 +16,17 @@ div.task-tile {
     background-color: @vdBlue;
   }
 
-  ul {
-    .boxSizingBorder;
+  div.task-html {
     display: inline-block;
     margin: 0.5em auto;
     width: 94%;
-    min-height: 4em;
+    .boxSizingBorder;
+
+    ul {
+      margin: 0;
+      .boxSizingBorder;
+      min-height: 4em;
+    }
 
     li {
       list-style-type: circle;
@@ -51,8 +56,9 @@ div.task-tile {
 div.task-editor {
   textarea {
     .boxSizingBorder;
+    padding: 0.5em 0 0.5em 30px;
     display: block;
-    height: 5em;
+    height: 6em;
     width: 100%;
 
     border-radius: 0;
