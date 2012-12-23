@@ -51,6 +51,12 @@ define(['knockout'], function(ko) {
       // Update the view-model
       self.tasks.remove(task);
     };
+
+    self.add_today = function add_today() {
+    };
+
+    self.add_tomorrow = function add_tomorrow() {
+    };
   };
 
   return {
