@@ -3,7 +3,7 @@
     "model": "app.Task",
     "pk" : 1,
     "fields": {
-      "date": "2012-12-24",
+      "date": "2012-12-25",
       "done": false,
       "task": " - 1 do this, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
     }
@@ -12,7 +12,7 @@
     "model": "app.Task",
     "pk" : 2,
     "fields": {
-      "date": "2012-12-24",
+      "date": "2012-12-25",
       "done": false,
       "task": " - 2 do this in the morning, do that,\n - also, do this, do that\n - don't forget this, don't forget that, *definitely do this*"
     }
@@ -21,7 +21,7 @@
     "model": "app.Task",
     "pk" : 3,
     "fields": {
-      "date": "2012-12-24",
+      "date": "2012-12-25",
       "done": false,
       "task": " - 3 do this tomorrow, do that,\n - also, do this, do that\n - don't forget this, don't forget that"
     }
@@ -30,7 +30,7 @@
     "model": "app.Task",
     "pk" : 4,
     "fields": {
-      "date": "2012-12-24",
+      "date": "2012-12-25",
       "done": false,
       "task": " - 4 do this, do that,\n - also, in the evening, do this, do that\n - don't forget this, don't forget that"
     }
