@@ -28,6 +28,7 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     self.defer = function defer() {
+      // Create a new object with all the properties in post_object
       var new_post_object = {}; 
       $.extend(new_post_object, post_object, {
         'pk': self.id,
@@ -38,6 +39,14 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     self.done = function done() {
+      // Create a new object with all the properties in post_object
+      var new_post_object = {};
+      $.extend(new_post_object, post_object, {
+        'pk': self.id,
+        'done': 1
+      });
+
+      $.post(resource, new_post_object);
     };
   };
 
