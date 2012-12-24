@@ -31,7 +31,7 @@
 
         <!-- Define an editable view -->
         <div class="task-tile task-editor" data-bind="if: is_being_edited, attr: { id: 'data-' + id()}">
-            <textarea data-bind="hasfocus: is_being_edited, html: markdown()"></textarea>
+            <textarea data-bind="hasfocus: is_being_edited, value: markdown"></textarea>
         </div>
       </div>
     </span>
