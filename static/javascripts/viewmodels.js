@@ -22,6 +22,25 @@ define(['knockout', 'jquery'], function(ko, $) {
     self.html = ko.observable(html);
     self.is_being_edited = ko.observable(false);
 
+    this.is_being_edited.subscribe(function edit_post(new_is_being_edited) {
+      if ( !new_is_being_edited ) {
+        // Only if the editor has lost focus, do we update.
+        var new_post_object = {};
+        $.extend(new_post_object, post_object, {
+          'pk': self.id,
+          'task': self.markdown()
+        });
+
+        $.post(resource, new_post_object, 
+          function (response){
+            var response = JSON.parse(response)
+              , html = response.html;
+
+            self.html(html);
+          });
+      }
+    });
+
     // Methods to manage the task
     self.edit = function edit() {
       self.is_being_edited(true);
