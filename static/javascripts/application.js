@@ -6,7 +6,7 @@ requirejs.config({
 });
 
 define(['knockout', 'viewmodels'], function(ko, vm) {
-  var task_list = new vm.TaskList();
+  var task_list = new vm.TaskList([], null, null, null);
 
   return {
     task_list : task_list

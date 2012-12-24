@@ -91,11 +91,15 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
   };
 
-  function TaskList() {
+  function TaskList(tasks, day, full_date, human_date) {
     var self = this;
 
     // Data members
-    self.tasks = ko.observableArray();
+    self.tasks = ko.observableArray(tasks);
+    self.day = ko.observable(day);
+    self.full_date = ko.observable(full_date);
+    self.human_date = ko.observable(human_date);
+
 
     // Methods to manage the list
     self.done = function done(task) {

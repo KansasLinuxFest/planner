@@ -18,7 +18,7 @@
   </head>
   <body>
     <span class="column fixed-width-small">
-      <h1>Today</h1>
+      <h1 data-bind="text: human_date"></h1>
       <div id="tasks-wow" data-bind="visible: tasks().length == 0">
         Wow, there <em>are</em> no unfinished tasks! I ain't complaining, but maybe, just maybe, you didn't add any for today?
       </div>
@@ -39,8 +39,8 @@
       </div>
     </span>
     <span class="column fixed-position">
-      <h1 class="day">{{ today.day }}</h1>
-      <h2 class="date">{{ today.full }}</h2>
+      <h1 class="day" data-bind="text: day"></h1>
+      <h2 class="date" data-bind="text: full_date"></h2>
       {% csrf_token %}
       <a href="#" class="add-task" data-bind="click: add_today"><i class="icon icon-plus-sign"></i>Add task for today</a>
       <a href="#" class="add-task" data-bind="click: add_tomorrow"><i class="icon icon-plus-sign"></i>Add task for tomorrow</a>
@@ -73,6 +73,10 @@
                                         tmp_task.markdown,
                                         tmp_task.html));
         }
+
+        app.task_list.full_date("{{ today.full }}");
+        app.task_list.day("{{ today.day }}");
+        app.task_list.human_date("Today");
 
         ko.applyBindings(app.task_list);
       };
