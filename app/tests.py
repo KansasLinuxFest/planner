@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from django.utils import unittest
 from django.test.client import Client
@@ -70,6 +70,14 @@ class HomeViewsTestCase(unittest.TestCase):
     task = Task.objects.get(pk=4)
     self.assertEqual(task.date, target_dt,
         "POST / with correct pk doesn't update *date*")
+
+    # Try deferring
+    target = date.today() + timedelta(days=1)
+    response = self.c.post('/',
+        {'pk': 4, 'defer': 1})
+    task = Task.objects.get(pk=4)
+    self.assertEqual(task.date, target,
+        "POST / with correct pk doesn't defer to tomorrow")
 
   def testDelete(self):
     response = self.c.post('/',

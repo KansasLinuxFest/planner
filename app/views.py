@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -111,6 +111,9 @@ class Home(View):
 
       if 'date' in request.POST:
         task.date = date_from_string(request.POST['date'])
+
+      if 'defer' in request.POST:
+        task.date = date.today() + timedelta(days=1) if request.POST['defer'] == '1' else date.today()
 
       if 'active' in request.POST:
         task.active = False if request.POST['active'] == '0' else True
