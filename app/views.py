@@ -68,7 +68,7 @@ class Home(View):
     context['today'] = {'full': get_full_date(today),
         'day': get_day_of_week(today)}
 
-    tasks_for_today = all_tasks.filter(date=today)\
+    tasks_for_today = all_tasks.order_by('-pk').filter(date=today)\
         .filter(active=True).filter(done=False)
     context['tasks_for_today'] = tasks_for_today
 
