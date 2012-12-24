@@ -1,10 +1,17 @@
 requirejs.config({
   paths: {
     knockout: "/static/javascripts/vendor/knockout",
+    jquery:   "/static/javascripts/vendor/jquery"
   }
 });
 
-define(['knockout'], function(ko) {
+define(['knockout', 'jquery'], function(ko, $) {
+  var resource = "/",
+      csrf_token = $('input[name="csrfmiddlewaretoken"]').val(),
+      post_object = {
+        'csrfmiddlewaretoken': csrf_token
+      };
+
   // View-model for a task
   function Task(id, markdown, html) {
     var self = this;
@@ -21,13 +28,16 @@ define(['knockout'], function(ko) {
     };
 
     self.defer = function defer() {
-      // TODO actual marking on server
-      console.log('defered');
+      var new_post_object = {}; 
+      $.extend(new_post_object, post_object, {
+        'pk': self.id,
+        'defer': 1
+      });
+
+      $.post(resource, new_post_object);
     };
 
     self.done = function done() {
-      // TODO actual marking on server
-      console.log('done');
     };
   };
 
