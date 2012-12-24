@@ -76,7 +76,7 @@
 
         app.task_list.full_date("{{ today.full }}");
         app.task_list.day("{{ today.day }}");
-        app.task_list.human_date("Today");
+        app.task_list.human_date("{{ today.human }}");
 
         ko.applyBindings(app.task_list);
       };

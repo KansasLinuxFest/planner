@@ -16,6 +16,26 @@ def get_full_date(date):
   """ Returns a string like 'November 27, 2009' """
   return date.strftime("%B %d, %Y")
 
+def get_human(indate):
+  """ Attempts to return a string that best describes the date relative to the
+  date today. e.g. Today, Tomorrow, Yesterday, The Day efore Yesterday etc."""
+  today = date.today()
+  delta = indate - date.today()
+
+  humans = {
+      -2 : 'The Day before Yesterday',
+      -1 : 'Yesterday',
+      0  : 'Today',
+      1  : 'Tomorrow',
+      2  : 'The Day after Tomorrow'
+  }
+
+  try:
+    return humans[delta.days]
+  except KeyError:
+    return "Some Day"
+
+
 def date_from_string(indate):
   """ Returns a python datetime.date object from a string formatted as
   '2012-11-21' = 'yyyy-mm-dd' """
@@ -66,7 +86,8 @@ class Home(View):
 
     today = date.today()
     context['today'] = {'full': get_full_date(today),
-        'day': get_day_of_week(today)}
+        'day': get_day_of_week(today), 
+        'human': get_human(today)}
 
     tasks_for_today = all_tasks.order_by('-pk').filter(date=today)\
         .filter(active=True).filter(done=False)
