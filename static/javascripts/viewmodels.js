@@ -10,34 +10,56 @@ define(['knockout', 'jquery'], function(ko, $) {
       csrf_token = $('input[name="csrfmiddlewaretoken"]').val(),
       post_object = {
         'csrfmiddlewaretoken': csrf_token
-      };
+      },
+      NEW_ID = 'new';
 
   // View-model for a task
-  function Task(id, markdown, html) {
+  function Task(id, markdown, html, ibe) {
     var self = this;
 
     // Data members
     self.id = ko.observable(id);
     self.markdown = ko.observable(markdown);
     self.html = ko.observable(html);
-    self.is_being_edited = ko.observable(false);
+
+    // If argument supplied, respect it, else default to false
+    self.is_being_edited = ibe === undefined ? ko.observable(false) : ko.observable(ibe);
 
     this.is_being_edited.subscribe(function edit_post(new_is_being_edited) {
       if ( !new_is_being_edited ) {
-        // Only if the editor has lost focus, do we update.
-        var new_post_object = {};
-        $.extend(new_post_object, post_object, {
-          'pk': self.id,
-          'task': self.markdown()
-        });
-
-        $.post(resource, new_post_object, 
-          function (response){
-            var response = JSON.parse(response)
-              , html = response.html;
-
-            self.html(html);
+        // Only if the editor has lost focus, do we update, or create
+        if ( self.id() === NEW_ID ) {
+          // A new object should be created
+          var new_post_object = {};
+          $.extend(new_post_object, post_object, {
+            'task': self.markdown()
           });
+
+          $.post(resource, new_post_object,
+            function (response) {
+              var response = JSON.parse(response)
+                , html = response.html
+                , id = response.id;
+
+              self.html(html);
+              self.id(id);
+            });
+        } else {
+          // For existing objects 
+          var new_post_object = {};
+          $.extend(new_post_object, post_object, {
+            'pk': self.id,
+            'task': self.markdown()
+          });
+
+          $.post(resource, new_post_object, 
+            function (response) {
+              var response = JSON.parse(response)
+                , html = response.html;
+
+              self.html(html);
+            });
+        }
       }
     });
 
@@ -91,6 +113,9 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     self.add_today = function add_today() {
+      var nt = new Task(NEW_ID, '- ', '<p></p>', true);
+
+      self.tasks.unshift(nt);
     };
 
     self.add_tomorrow = function add_tomorrow() {
