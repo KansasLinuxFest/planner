@@ -1,0 +1,6 @@
+{"pk":{{task.pk}},
+"date":"{{task.date}}",
+"done":"{{task.done}}",
+"markdown":"{{task.task|escapejs}}",
+"html":"{{task.to_ul|safe|escapejs}}"
+}

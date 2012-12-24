@@ -76,3 +76,44 @@ class Home(View):
 
     return render_to_response('planner.html', context,
         context_instance=RequestContext(request))
+
+
+  def post(self, request, *args, **kwargs):
+    """ Creates, Updates or Deletes tasks as requested by the client.
+    """
+
+    # Create an entirely new object
+    if 'pk' not in request.POST:
+      # Not enough data to do anything
+      if 'task' not in request.POST:
+        return HttpResponseBadRequest()
+
+      today = date.today()
+      task = Task.objects.create(date=today, task=request.POST['task'],
+        done=False)
+      task.save()
+
+      return HttpResponseCreated(json_from_task(task, True))
+
+    # This is a request for an update
+    if 'pk' in request.POST:
+      task = Task.objects.filter(pk=request.POST['pk'])
+      if not task.exists():
+        return HttpResponseBadRequest()
+
+      task = Task.objects.get(pk=request.POST['pk'])
+
+      if 'done' in request.POST:
+        task.done = True if request.POST['done'] == '1' else False
+
+      if 'task' in request.POST:
+        task.task = request.POST['task']
+
+      if 'date' in request.POST:
+        task.date = date_from_string(request.POST['date'])
+
+      if 'active' in request.POST:
+        task.active = False if request.POST['active'] == '0' else True
+
+      task.save()
+      return HttpResponse(json_from_task(task, True))

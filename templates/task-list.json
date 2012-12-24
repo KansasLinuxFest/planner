@@ -1,0 +1,5 @@
+[
+  {% for task in tasks %}
+    {% include "task-single.json" %} 
+  {% endfor %}
+]
