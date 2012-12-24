@@ -19,6 +19,9 @@
   <body>
     <span class="column fixed-width-small">
       <h1>Today</h1>
+      <div id="tasks-wow" data-bind="visible: tasks().length == 0">
+        Wow, there <em>are</em> no unfinished tasks! I ain't complaining, but maybe, just maybe, you didn't add any for today?
+      </div>
       <div id="tasks-container" data-bind="foreach: tasks">
         <!-- Define a plain non-editable view -->
         <div class="task-tile" data-bind="ifnot: is_being_edited, attr: { id: 'data-' + id()}">
