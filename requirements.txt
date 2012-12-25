@@ -1,6 +1,7 @@
 Django==1.4.3
 Markdown==2.2.1
 MySQL-python==1.2.4c1
+gunicorn==0.17.0
 argparse==1.2.1
 distribute==0.6.32
 wsgiref==0.1.2
