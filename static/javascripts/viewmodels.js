@@ -29,6 +29,12 @@ define(['knockout', 'jquery'], function(ko, $) {
       if ( !new_is_being_edited ) {
         // Only if the editor has lost focus, do we update, or create
         if ( self.id() === NEW_ID ) {
+          // Create only if there is substantial data. I mean, why would you
+          // accept "- a" as a task?
+          if ( self.markdown().length < 4 ) {
+            return;
+          }
+
           // A new object should be created
           var new_post_object = {};
           $.extend(new_post_object, post_object, {
@@ -120,9 +126,6 @@ define(['knockout', 'jquery'], function(ko, $) {
       var nt = new Task(NEW_ID, '- ', '<p></p>', true);
 
       self.tasks.unshift(nt);
-    };
-
-    self.add_tomorrow = function add_tomorrow() {
     };
   };
 
