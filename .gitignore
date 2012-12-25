@@ -6,7 +6,8 @@ local/
 
 # Django ignores 
 *.pyc
-planserver/localsettings.py
+app/localsettings.py
 
-# Collected static files
-planserver/static/
+# Gunicorn local config
+gunicorn_config.py
+
