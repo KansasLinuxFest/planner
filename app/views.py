@@ -39,10 +39,14 @@ def get_human(indate):
 def date_from_string(indate):
   """ Returns a python datetime.date object from a string formatted as
   '2012-11-21' = 'yyyy-mm-dd' """
-  return datetime.strptime(indate, "%Y-%m-%d")
+  return datetime.strptime(indate, "%Y-%m-%d").date()
 
 def json_from_task(tasks, singleton=False):
-  """ Returns a JSON string of the tasks.
+  """ Returns a JSON string of the tasks, without any date markers.
+
+  Useful if you are returning to an *aware* client, which already knows what
+  date it is requesting the object for. E.g. in returning data to a client
+  waiting on a POST request, etc..
   
   If you want the object to be treated as a single element (the JSON will have
   a single object), pass the singleton argument as True. On the other hand, if
@@ -84,17 +88,22 @@ class Home(View):
     context = {}
     all_tasks = Task.objects.all()
 
-    today = date.today()
-    context['today'] = {'full': get_full_date(today),
-        'day': get_day_of_week(today), 
-        'human': get_human(today)}
+    if 'date' in request.GET:
+      req_date = date_from_string(request.GET['date'])
+    else:
+      req_date = date.today()
 
-    tasks_for_today = all_tasks.order_by('-pk').filter(date=today)\
+    context['date'] = {'full': get_full_date(req_date),
+        'day': get_day_of_week(req_date), 
+        'human': get_human(req_date)}
+
+    tasks = all_tasks.order_by('-pk').filter(date=req_date)\
         .filter(active=True).filter(done=False)
-    context['tasks_for_today'] = tasks_for_today
+    context['tasks'] = tasks
 
     if 'type' in request.GET and request.GET['type'] == 'JSON':
-      return HttpResponse(json_from_task(tasks_for_today))
+      return render_to_response('task-list.json', context,
+          context_instance=RequestContext(request))
 
     return render_to_response('planner.html', context,
         context_instance=RequestContext(request))

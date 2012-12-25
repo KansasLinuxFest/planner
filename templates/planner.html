@@ -57,7 +57,7 @@
 
       function init(ko, app, vm) {
         var tasks_from_template = [
-          {% for task in tasks_for_today %}
+          {% for task in tasks %}
             {
               'id'       : {{ task.pk }},
               'markdown' : "{{ task.task|safe|escapejs }}",
@@ -74,9 +74,9 @@
                                         tmp_task.html));
         }
 
-        app.task_list.full_date("{{ today.full }}");
-        app.task_list.day("{{ today.day }}");
-        app.task_list.human_date("{{ today.human }}");
+        app.task_list.full_date("{{ date.full }}");
+        app.task_list.day("{{ date.day }}");
+        app.task_list.human_date("{{ date.human }}");
 
         ko.applyBindings(app.task_list);
       };
