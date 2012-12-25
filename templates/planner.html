@@ -27,8 +27,8 @@
         <div class="task-tile" data-bind="ifnot: is_being_edited, attr: { id: 'data-' + id()}">
           <div class="task-html" data-bind="html: html(), click: edit">
           </div><span class="task-actions">
-            <a title="Done!" class="task-action-btn" href="#" data-bind="click: $root.done"><i class="icon icon-ok"></i></a>
-            <a title="Defer for tomorrow" class="task-action-btn" href="#" data-bind="click: $root.defer"><i class="icon icon-share-alt"/></i></a>
+            <a title="Done!" class="task-action-btn done" href="#" data-bind="click: $root.done"><i class="icon icon-ok"></i></a>
+            <a title="Defer for tomorrow" class="task-action-btn defer" href="#" data-bind="click: $root.defer"><i class="icon icon-share-alt"/></i></a>
           </span>
         </div>
 
