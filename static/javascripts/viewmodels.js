@@ -87,15 +87,17 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     self.mark_done = function mark_done() {
+      // If done, mark as undone, else, mark as done
+
       // Create a new object with all the properties in post_object
       var new_post_object = {};
       $.extend(new_post_object, post_object, {
         'pk': self.id,
-        'done': 1
+        'done': self.done() ? 0 : 1
       });
 
       $.post(resource, new_post_object);
-      self.done(true);
+      self.done(!self.done());
     };
   };
 
