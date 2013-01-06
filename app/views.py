@@ -98,7 +98,7 @@ class Home(View):
         'human': get_human(req_date)}
 
     tasks = all_tasks.order_by('-pk').filter(date=req_date)\
-        .filter(active=True).filter(done=False)
+        .filter(active=True)
     context['tasks'] = tasks
 
     if 'type' in request.GET and request.GET['type'] == 'JSON':

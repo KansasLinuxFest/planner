@@ -1,6 +1,6 @@
 {"pk":{{task.pk}},
 "date":"{{task.date}}",
-"done":"{{task.done}}",
+"done": {% if task.done %} true {% else %} false {% endif %},
 "markdown":"{{task.task|escapejs}}",
 "html":"{{task.to_ul|safe|escapejs}}"
 }

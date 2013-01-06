@@ -26,7 +26,7 @@
       <div id="tasks-container" data-bind="foreach: tasks">
         <!-- Define a plain non-editable view -->
         <div class="task-tile" data-bind="ifnot: is_being_edited, attr: { id: 'data-' + id()}">
-          <div class="task-html" data-bind="html: html(), click: edit">
+          <div class="task-html" data-bind="css: { done: done }, html: html(), click: edit">
           </div><span class="task-actions">
             <a title="Done!" class="task-action-btn done" href="#" data-bind="click: $root.done"><i class="icon icon-ok"></i></a>
             <a title="Defer for tomorrow" class="task-action-btn defer" href="#" data-bind="click: $root.defer"><i class="icon icon-share-alt"/></i></a>
@@ -60,20 +60,17 @@
       function init(ko, app, vm) {
         var tasks_from_template = [
           {% for task in tasks %}
-            {
-              'id'       : {{ task.pk }},
-              'markdown' : "{{ task.task|safe|escapejs }}",
-              'html'     : "{{ task.to_ul|safe|escapejs }}"
-            },
+            {% include "task-single.json" %},
           {% endfor %}
         ];
 
         for (var i=0, tmp_task; i<tasks_from_template.length; i++) {
           tmp_task = tasks_from_template[i]; 
 
-          app.task_list.tasks.push(new vm.Task(tmp_task.id,
+          app.task_list.tasks.push(new vm.Task(tmp_task.pk,
                                         tmp_task.markdown,
-                                        tmp_task.html));
+                                        tmp_task.html,
+                                        tmp_task.done));
         }
 
         app.task_list.full_date("{{ date.full }}");

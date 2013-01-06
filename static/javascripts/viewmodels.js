@@ -14,13 +14,14 @@ define(['knockout', 'jquery'], function(ko, $) {
       NEW_ID = 'new';
 
   // View-model for a task
-  function Task(id, markdown, html, ibe) {
+  function Task(id, markdown, html, done, ibe) {
     var self = this;
 
     // Data members
     self.id = ko.observable(id);
     self.markdown = ko.observable(markdown);
     self.html = ko.observable(html);
+    self.done = ko.observable(done);
 
     // If argument supplied, respect it, else default to false
     self.is_being_edited = ibe === undefined ? ko.observable(false) : ko.observable(ibe);
@@ -85,7 +86,7 @@ define(['knockout', 'jquery'], function(ko, $) {
       $.post(resource, new_post_object);
     };
 
-    self.done = function done() {
+    self.mark_done = function mark_done() {
       // Create a new object with all the properties in post_object
       var new_post_object = {};
       $.extend(new_post_object, post_object, {
@@ -94,6 +95,7 @@ define(['knockout', 'jquery'], function(ko, $) {
       });
 
       $.post(resource, new_post_object);
+      self.done(true);
     };
   };
 
@@ -109,11 +111,8 @@ define(['knockout', 'jquery'], function(ko, $) {
 
     // Methods to manage the list
     self.done = function done(task) {
-      task.done();
-
-      // Update the view-model
-      self.tasks.remove(task);
-    };
+      task.mark_done();
+     };
     
     self.defer = function defer(task) {
       task.defer();
@@ -123,7 +122,7 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     self.add_today = function add_today() {
-      var nt = new Task(NEW_ID, '- ', '<p></p>', true);
+      var nt = new Task(NEW_ID, '- ', '<p></p>', false, true);
 
       self.tasks.unshift(nt);
     };
