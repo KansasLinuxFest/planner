@@ -1,11 +1,8 @@
 {
-  date : {{ date.full }},
-  day  : {{ date.day }},
-  human: {{ date.human }},
-
-  tasks: [
-    {% for task in tasks %}
-      {% include "task-single.json" %} 
-    {% endfor %}
-  ]
+  "date" : "{{ date.full }}",
+  "day"  : "{{ date.day }}",
+  "human": "{{ date.human }}",
+  "tasks": [ {% for task in tasks %}
+      {% include "task-single.json" %}{% if not forloop.last %},{% endif %}
+    {% endfor %}]
 }

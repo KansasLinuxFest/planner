@@ -86,7 +86,7 @@ class Home(View):
     """ Returns a fully formatted application or alternatively a JSON of tasks
     if so requested. """
     context = {}
-    all_tasks = Task.objects.all()
+    all_tasks = Task.objects.all().order_by('-pk')
 
     if 'date' in request.GET:
       req_date = date_from_string(request.GET['date'])
@@ -97,8 +97,13 @@ class Home(View):
         'day': get_day_of_week(req_date), 
         'human': get_human(req_date)}
 
-    tasks = all_tasks.order_by('-pk').filter(date=req_date)\
-        .filter(active=True)
+    if 'done' in request.GET:
+      tasks = all_tasks.filter(done=False)
+      context['date']['human'] = "Unfinished"
+    else:
+      tasks = all_tasks.order_by('-pk').filter(date=req_date)\
+          .filter(active=True)
+
     context['tasks'] = tasks
 
     if 'type' in request.GET and request.GET['type'] == 'JSON':

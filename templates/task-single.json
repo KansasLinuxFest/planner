@@ -1,4 +1,4 @@
-{"pk":{{task.pk}},
+{"pk":"{{task.pk}}",
 "date":"{{task.date}}",
 "done": {% if task.done %} true {% else %} false {% endif %},
 "markdown":"{{task.task|escapejs}}",

@@ -128,6 +128,25 @@ define(['knockout', 'jquery'], function(ko, $) {
 
       self.tasks.unshift(nt);
     };
+
+    // Methods to amend entire list
+    self.get_unfinished = function get_unfinished() {
+      $.get(resource, { 'done' : 0, 'type': 'JSON' }, function(response) {
+        var resp = JSON.parse(response);
+        
+        self.human_date(resp.human);
+        self.tasks([]);
+
+        for (var i=0, tmp_task; i<resp.tasks.length; i++) {
+          tmp_task = resp.tasks[i];
+
+          self.tasks.push(new Task(tmp_task.pk,
+                                   tmp_task.markdown,
+                                   tmp_task.html,
+                                   tmp_task.done));
+        }
+      });
+    };
   };
 
   return {
