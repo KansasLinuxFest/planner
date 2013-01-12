@@ -47,9 +47,7 @@
       <h1 class="day" data-bind="text: day"></h1>
       <h2 class="date" data-bind="text: full_date"></h2>
       {% csrf_token %}
-      <a href="#" class="add-task" data-bind="click: add_today"><i class="icon icon-plus-sign"></i>Add task</a>
-      <!--<a href="#" class="add-task" data-bind="click: add_tomorrow"><i
-          class="icon icon-plus-sign"></i>Add task for tomorrow</a>-->
+      <a href="#" class="add-task" data-bind="ifnot: date() == 'unfinished', click: add_today"><i class="icon icon-plus-sign"></i>Add task</a>
     </span>
 
     <!-- Initialization: this script is formed via the django-template engine
@@ -77,6 +75,7 @@
                                         tmp_task.done));
         }
 
+        app.task_list.date("{{ date.date }}");
         app.task_list.full_date("{{ date.full }}");
         app.task_list.day("{{ date.day }}");
         app.task_list.human_date("{{ date.human }}");

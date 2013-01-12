@@ -93,13 +93,15 @@ class Home(View):
     else:
       req_date = date.today()
 
-    context['date'] = {'full': get_full_date(req_date),
+    context['date'] = {'date': req_date.strftime("%Y-%m-%d"),
+        'full': get_full_date(req_date),
         'day': get_day_of_week(req_date), 
         'human': get_human(req_date)}
 
     if 'done' in request.GET:
       tasks = all_tasks.filter(done=False)
       context['date']['human'] = "Unfinished"
+      context['date']['date'] = "unfinished"
     else:
       tasks = all_tasks.order_by('-pk').filter(date=req_date)\
           .filter(active=True)
@@ -124,8 +126,12 @@ class Home(View):
       if 'task' not in request.POST:
         return HttpResponseBadRequest()
 
-      today = date.today()
-      task = Task.objects.create(date=today, task=request.POST['task'],
+      if 'date' in request.POST:
+        tdate = date_from_string(request.POST['date'])
+      else:
+        tdate = date.today()
+
+      task = Task.objects.create(date=tdate, task=request.POST['task'],
         done=False)
       task.save()
 

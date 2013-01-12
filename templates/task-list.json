@@ -1,5 +1,6 @@
 {
-  "date" : "{{ date.full }}",
+  "full_date" : "{{ date.full }}",
+  "date" : "{{ date.date }}",
   "day"  : "{{ date.day }}",
   "human": "{{ date.human }}",
   "tasks": [ {% for task in tasks %}

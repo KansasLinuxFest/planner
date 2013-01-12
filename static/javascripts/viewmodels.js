@@ -101,7 +101,7 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
   };
 
-  function TaskList(tasks, day, full_date, human_date) {
+  function TaskList(tasks, day, date, full_date, human_date) {
     var self = this;
 
     // Data members
@@ -109,6 +109,7 @@ define(['knockout', 'jquery'], function(ko, $) {
     self.day = ko.observable(day);
     self.full_date = ko.observable(full_date);
     self.human_date = ko.observable(human_date);
+    self.date = ko.observable(date);
 
 
     // Methods to manage the list
@@ -135,6 +136,7 @@ define(['knockout', 'jquery'], function(ko, $) {
         var resp = JSON.parse(response);
         
         self.human_date(resp.human);
+        self.date(resp.date);
         self.tasks([]);
 
         for (var i=0, tmp_task; i<resp.tasks.length; i++) {
