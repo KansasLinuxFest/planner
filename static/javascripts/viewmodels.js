@@ -155,26 +155,30 @@ define(['knockout', 'jquery'], function(ko, $) {
       $.get(resource, {'date': date, 'type': 'JSON'}, self.update_from_response);
     };
 
+    self.get_date_string = function get_date_string(date) {
+      return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    };
+
     self.get_yesterdays = function get_yesterdays() {
       var date = new Date();
       date.setDate(date.getDate() - 1);
 
       // This is something like a strftime call. It takes a js Date object and
       // converts it to 2013-01-12
-      self.get_for_date(date.toJSON().split('T')[0]);
+      self.get_for_date(self.get_date_string(date));
     };
 
     self.get_tomorrows = function get_tomorrows() {
       var date = new Date();
       date.setDate(date.getDate() + 1);
 
-      self.get_for_date(date.toJSON().split('T')[0]);
+      self.get_for_date(self.get_date_string(date));
     };
 
     self.get_todays = function get_todays() {
       var date = new Date();
 
-      self.get_for_date(date.toJSON().split('T')[0]);
+      self.get_for_date(self.get_date_string(date));
     };
   };
 
