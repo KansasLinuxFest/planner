@@ -21,8 +21,10 @@
     <span class="column fixed-width-small">
       <h1 data-bind="text: human_date"></h1>
       <ul class="navigation">
-        <li><a href="#" data-bind="click: $root.get_unfinished ">All Unfinished</a></li>
-        <li><a href="#" data-bind="">Yesterday's</a></li>
+        <li><a href="#" data-bind="click: $root.get_unfinished ">Unfinished</a></li>
+        <li><a href="#" data-bind="click: $root.get_yesterdays ">Yesterday's</a></li>
+        <li><a href="#" data-bind="click: $root.get_todays">Today's</a></li>
+        <li><a href="#" data-bind="click: $root.get_tomorrows">Tomorrow's</a></li>
       </ul>
       <div id="tasks-wow" data-bind="visible: tasks().length == 0">
         Wow, there <em>are</em> no unfinished tasks! I ain't complaining, but maybe, just maybe, you didn't add any for today?

@@ -131,25 +131,54 @@ define(['knockout', 'jquery'], function(ko, $) {
     };
 
     // Methods to amend entire list
+    self.update_from_response = function update_from_response(response) {
+      var resp = JSON.parse(response);
+
+      self.human_date(resp.human);
+      self.date(resp.date);
+      self.tasks([]);
+
+      for (var i=0, tmp_task; i<resp.tasks.length; i++) {
+        tmp_task = resp.tasks[i];
+
+        self.tasks.push(new Task(tmp_task.pk,
+              tmp_task.markdown,
+              tmp_task.html,
+              tmp_task.done));
+      }
+    };
     self.get_unfinished = function get_unfinished() {
-      $.get(resource, { 'done' : 0, 'type': 'JSON' }, function(response) {
-        var resp = JSON.parse(response);
-        
-        self.human_date(resp.human);
-        self.date(resp.date);
-        self.tasks([]);
+      $.get(resource, { 'done' : 0, 'type': 'JSON' }, self.update_from_response);
+    };
 
-        for (var i=0, tmp_task; i<resp.tasks.length; i++) {
-          tmp_task = resp.tasks[i];
+    self.get_for_date = function get_for_date(date) {
+      $.get(resource, {'date': date, 'type': 'JSON'}, self.update_from_response);
+    };
 
-          self.tasks.push(new Task(tmp_task.pk,
-                                   tmp_task.markdown,
-                                   tmp_task.html,
-                                   tmp_task.done));
-        }
-      });
+    self.get_yesterdays = function get_yesterdays() {
+      var date = new Date();
+      date.setDate(date.getDate() - 1);
+
+      // This is something like a strftime call. It takes a js Date object and
+      // converts it to 2013-01-12
+      self.get_for_date(date.toJSON().split('T')[0]);
+    };
+
+    self.get_tomorrows = function get_tomorrows() {
+      var date = new Date();
+      date.setDate(date.getDate() + 1);
+
+      self.get_for_date(date.toJSON().split('T')[0]);
+    };
+
+    self.get_todays = function get_todays() {
+      var date = new Date();
+
+      self.get_for_date(date.toJSON().split('T')[0]);
     };
   };
+
+
 
   return {
     Task: Task,
