@@ -22,6 +22,7 @@ define(['knockout', 'jquery'], function(ko, $) {
     self.markdown = ko.observable(markdown);
     self.html = ko.observable(html);
     self.done = ko.observable(done);
+    self.date = undefined;
 
     // If argument supplied, respect it, else default to false
     self.is_being_edited = ibe === undefined ? ko.observable(false) : ko.observable(ibe);
@@ -41,6 +42,11 @@ define(['knockout', 'jquery'], function(ko, $) {
           $.extend(new_post_object, post_object, {
             'task': self.markdown()
           });
+
+          if (self.date) {
+            // assign the date to the request that will shortly be sent.
+            new_post_object['date'] = self.date;
+          }
 
           $.post(resource, new_post_object,
             function (response) {
@@ -73,6 +79,10 @@ define(['knockout', 'jquery'], function(ko, $) {
     // Methods to manage the task
     self.edit = function edit() {
       self.is_being_edited(true);
+    };
+
+    self.set_date = function set_date(date) {
+      self.date = date;
     };
 
     self.defer = function defer() {
@@ -124,8 +134,9 @@ define(['knockout', 'jquery'], function(ko, $) {
       self.tasks.remove(task);
     };
 
-    self.add_today = function add_today() {
+    self.add_task = function add_task() {
       var nt = new Task(NEW_ID, '- ', '<p></p>', false, true);
+      nt.set_date(self.date);
 
       self.tasks.unshift(nt);
     };
