@@ -27,7 +27,7 @@
         <li><a href="#" data-bind="click: $root.get_tomorrows">Tomorrow's</a></li>
       </ul>
       <div id="tasks-wow" data-bind="visible: tasks().length == 0">
-        Wow, there <em>are</em> no unfinished tasks! I ain't complaining, but maybe, just maybe, you didn't add any for today?
+        Wow, there <em>are</em> no unfinished tasks! I ain't complaining, but maybe, just maybe, you didn't add any for <span data-bind="text: human_date"></span>?
       </div>
       <div id="tasks-container" data-bind="foreach: tasks">
         <!-- Define a plain non-editable view -->
