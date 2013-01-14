@@ -49,7 +49,7 @@
       <h1 class="day" data-bind="text: day"></h1>
       <h2 class="date" data-bind="text: full_date"></h2>
       {% csrf_token %}
-      <a href="#" class="add-task" data-bind="ifnot: date() == 'unfinished', click: add_today"><i class="icon icon-plus-sign"></i>Add task</a>
+      <a href="#" class="add-task" data-bind="visible: date() != 'unfinished', click: add_task"><i class="icon icon-plus-sign"></i>Add task</a>
     </span>
 
     <!-- Initialization: this script is formed via the django-template engine
